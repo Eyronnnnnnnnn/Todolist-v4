@@ -34,7 +34,7 @@ function Header({weather,loading}) {
   );
 }
 
-function TodolistInput() {
+function TodolistInput({newlist,setnewList,addnewList}) {
   return (
     <div className="bg-gradient-to-br from-[#3B261A]/90 to-[#21140D]/90 w-full h-40 rounded-xl border border-[#CD9D74]/20 p-4">
       <h1 className="text-[#F5E8DC] font-semibold">
@@ -47,6 +47,8 @@ function TodolistInput() {
       <div className="bg-gradient-to-r from-[#69432B]/50 to-[#382318]/60 h-14 rounded-lg flex items-center pl-4 border border-[#CD9D74]/20 shadow-inner">
         <div>
           <input
+          value={newlist}
+          onChange={(e)=> setnewList(e.target.value)}
             className="w-150 h-9 bg-transparent text-[#F5E8DC] placeholder:text-[#B49A83] outline-none"
             type="text"
             placeholder="Add New Task"
@@ -54,7 +56,9 @@ function TodolistInput() {
         </div>
 
         <div>
-          <button className="bg-gradient-to-br from-[#D5A77F] to-[#A8754F] text-[#21140D] font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition h-14">
+          <button 
+          onClick={()=>addnewList()}
+          className="bg-gradient-to-br from-[#D5A77F] to-[#A8754F] text-[#21140D] font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition h-14">
             Add
           </button>
         </div>
@@ -64,11 +68,16 @@ function TodolistInput() {
 }
 
 function Todolistform() {
-      const {list,taskList} = useContext(Listcontext);
+      const {list,taskList,newlist,setnewList,addnewList} = useContext(Listcontext);
+
   return (
     <div className="bg-gradient-to-br from-[#382318] to-[#1A100B] h-140 rounded-xl flex overflow-hidden border border-[#CD9D74]/20 shadow-[inset_0_1px_0_rgba(255,235,215,0.06),0_8px_32px_rgba(0,0,0,0.25)]">
       <div className="bg-gradient-to-br from-[#302016]/90 to-[#21140D]/90 w-192 p-4 ">
-        <TodolistInput />
+        <TodolistInput 
+        newlist = {newlist}
+        setnewList = {setnewList}
+        addnewList = {addnewList}
+        />
        
          <TaskList 
          list = {list}
@@ -111,6 +120,7 @@ export default function TaskForm() {
       <Header 
       
       weather = {weather}
+      loading={loading}
       />
       <Todolistform />
 
