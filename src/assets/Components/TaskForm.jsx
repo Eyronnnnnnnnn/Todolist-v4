@@ -7,12 +7,12 @@ import Listcontext from "./TaskContext";
    
 
 
-function Header({weather}) {
+function Header({weather,loading}) {
   
   return (
    
     <div className="h-20 flex  justify-start">
-      <div className="bg-amber-950 w-60">
+      <div className=" w-60">
         <div >
         <h1 className="text-2xl font-bold text-[#F5E8DC]">
           Codesistent
@@ -22,9 +22,9 @@ function Header({weather}) {
         <p className="text-[#CBB39C]">Small Steps Big Progress</p>
       </div>
       </div>
-      <div className="bg-amber-400 h-20 w-150 flex justify-center items-center">
-        <div className="bg-amber-700 w-20 ">
-           <h1>{weather}</h1>
+      <div className=" h-20 w-150 flex justify-center items-center">
+        <div className=" w-70 ">
+           <h1 className="text-white font-bold text-lg">{loading ? "Getting Date and Time..." : weather}</h1>
         </div>
        
       </div>
@@ -92,13 +92,14 @@ export default function TaskForm() {
     useEffect(()=>{
       const fetchUser = async() => {
         try{
-          const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m")
+          const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m,wind_speed_10m&timezone=Asia%2FManila")
           const data = await response.json();
           console.log(data)
           setWeather(data.current.time)
-          
+          setLoading(false)
         }catch(error){
           console.log(error);
+          setLoading(false)
         }
       }
           fetchUser()
@@ -109,7 +110,8 @@ export default function TaskForm() {
     <div className="w-full h-full  p-6">
       <Header 
       
-      weather = {weather} />
+      weather = {weather}
+      />
       <Todolistform />
 
 
