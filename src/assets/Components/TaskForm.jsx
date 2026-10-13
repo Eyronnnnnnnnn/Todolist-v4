@@ -1,14 +1,33 @@
 import TaskList from "./TaskList";
-import  {useContext} from "react"
+import  {useContext, useEffect, useState} from "react"
 import Listcontext from "./TaskContext";
 
+
+  const  WeatherApi = () =>{
+    const [weather , setWeather] = useState([])
+     const [loading , setLoading] = useState(true)    
+    useEffect(()=>{
+      const fetchUser = async() => {
+        try{
+          const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m")
+          const data = await response.json();
+          console.log(data)
+        }catch(error){
+          console.log(error);
+        }
+      }
+          fetchUser()
+    },[])
+
+  }
 
 
 function Header() {
   
   return (
-    <div className="h-25 flex flex-col justify-center">
-      <div>
+    <div className="h-20 flex  justify-start">
+      <div className="bg-amber-950 w-60">
+        <div >
         <h1 className="text-2xl font-bold text-[#F5E8DC]">
           Codesistent
         </h1>
@@ -16,6 +35,15 @@ function Header() {
       <div>
         <p className="text-[#CBB39C]">Small Steps Big Progress</p>
       </div>
+      </div>
+      <div className="bg-amber-400 h-20 w-150 flex justify-center items-center">
+        <div className="bg-amber-700 w-20 ">
+           <h1>time</h1>
+        </div>
+       
+      </div>
+   
+      
     </div>
   );
 }
@@ -55,6 +83,7 @@ function Todolistform() {
     <div className="bg-gradient-to-br from-[#382318] to-[#1A100B] h-140 rounded-xl flex overflow-hidden border border-[#CD9D74]/20 shadow-[inset_0_1px_0_rgba(255,235,215,0.06),0_8px_32px_rgba(0,0,0,0.25)]">
       <div className="bg-gradient-to-br from-[#302016]/90 to-[#21140D]/90 w-192 p-4 ">
         <TodolistInput />
+       
          <TaskList 
          list = {list}
          taskList = {taskList}
