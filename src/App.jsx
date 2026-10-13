@@ -21,7 +21,7 @@ function App() {
       id : newId , taskname : newlist , status : false
     }]
    
-    taskList([...list , newaddedlist]);
+    taskList([...list , ...newaddedlist]);
    setnewId(newId + 1);
   }
 
