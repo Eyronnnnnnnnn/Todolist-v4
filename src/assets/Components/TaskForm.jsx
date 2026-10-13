@@ -3,28 +3,14 @@ import  {useContext, useEffect, useState} from "react"
 import Listcontext from "./TaskContext";
 
 
-  const  WeatherApi = () =>{
-    const [weather , setWeather] = useState([])
-     const [loading , setLoading] = useState(true)    
-    useEffect(()=>{
-      const fetchUser = async() => {
-        try{
-          const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m")
-          const data = await response.json();
-          console.log(data)
-        }catch(error){
-          console.log(error);
-        }
-      }
-          fetchUser()
-    },[])
 
-  }
+   
 
 
-function Header() {
+function Header({weather}) {
   
   return (
+   
     <div className="h-20 flex  justify-start">
       <div className="bg-amber-950 w-60">
         <div >
@@ -38,7 +24,7 @@ function Header() {
       </div>
       <div className="bg-amber-400 h-20 w-150 flex justify-center items-center">
         <div className="bg-amber-700 w-20 ">
-           <h1>time</h1>
+           <h1>{weather}</h1>
         </div>
        
       </div>
@@ -101,9 +87,29 @@ function Todolistform() {
 }
 
 export default function TaskForm() {
+   const [weather , setWeather] = useState([])
+     const [loading , setLoading] = useState(true)    
+    useEffect(()=>{
+      const fetchUser = async() => {
+        try{
+          const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m")
+          const data = await response.json();
+          console.log(data)
+          setWeather(data.current.time)
+          
+        }catch(error){
+          console.log(error);
+        }
+      }
+          fetchUser()
+    },[])
+
+  
   return (
     <div className="w-full h-full  p-6">
-      <Header />
+      <Header 
+      
+      weather = {weather} />
       <Todolistform />
 
 
