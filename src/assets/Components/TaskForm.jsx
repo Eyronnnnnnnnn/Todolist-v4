@@ -103,11 +103,11 @@ export default function TaskForm() {
         try{
           const response = await fetch( "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m,wind_speed_10m&timezone=Asia%2FManila")
           const data = await response.json();
-          console.log(data)
+          
           setWeather(data.current.time)
           setLoading(false)
         }catch(error){
-          console.log(error);
+       
           setLoading(false)
         }
       }
