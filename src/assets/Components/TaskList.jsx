@@ -1,5 +1,7 @@
-
+import { useContext,useState } from "react";
+import Listcontext from "./TaskContext";
 export default function TaskList({ list,deleteList }) {
+    const {setSelectedList} = useContext(Listcontext)
   return (
     <div className="h-86 mt-4 overflow-y-auto overflow-x-hidden rounded-xl border border-[#6B5140]/20 bg-[#1C1714]/40 p-4">
 
@@ -31,7 +33,11 @@ export default function TaskList({ list,deleteList }) {
             </button>
 
             <button
-              onClick={()=> deleteList(li.id)}
+           onClick = {()=>{
+            setSelectedList(li.id)
+               deleteList(li.id)
+           }}
+            
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
             >

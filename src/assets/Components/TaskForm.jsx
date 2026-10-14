@@ -1,7 +1,7 @@
 import TaskList from "./TaskList";
 import  {useContext, useEffect, useState} from "react"
 import Listcontext from "./TaskContext";
-import EditTaskModal from "./EditTastModal";
+
 
 
 
@@ -58,6 +58,7 @@ function TodolistInput({newlist,setnewList,addnewList}) {
 
         <div>
           <button 
+          
           onClick={()=>addnewList()}
           className="bg-gradient-to-br from-[#D5A77F] to-[#A8754F] text-[#21140D] font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition h-14">
             Add
@@ -84,6 +85,7 @@ function Todolistform() {
          list = {list}
          taskList = {taskList}
          deleteList= {deleteList}
+         
 
          />
       </div>
@@ -129,7 +131,8 @@ export default function TaskForm() {
 
 
       <div className="bg-gradient-to-r from-[#2D1B12]/80 to-[#170E09]/80 rounded-xl"></div>
-      <EditTaskModal/>
+     
+     
     </div>
   );
 }
