@@ -1,6 +1,7 @@
 import TaskList from "./TaskList";
 import  {useContext, useEffect, useState} from "react"
 import Listcontext from "./TaskContext";
+import EditTaskModal from "./EditTastModal";
 
 
 
@@ -128,6 +129,7 @@ export default function TaskForm() {
 
 
       <div className="bg-gradient-to-r from-[#2D1B12]/80 to-[#170E09]/80 rounded-xl"></div>
+      <EditTaskModal/>
     </div>
   );
 }
