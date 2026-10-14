@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
 import Listcontext from "./TaskContext";
 export default function TaskList({ list, deleteList ,setModal}) {
-  const { setSelectedList,selectedList } = useContext(Listcontext);
+  const { selectedList ,setSelectedList} = useContext(Listcontext);
 
-  const Editbtn = list.filter(
-    (li)=> li.id === selectedList)
+  const Editbtn = list.filter((li)=> li.id === selectedList);
 
   return (
     <div className="h-86 mt-4 overflow-y-auto overflow-x-hidden rounded-xl border border-[#6B5140]/20 bg-[#1C1714]/40 p-4">
@@ -29,7 +28,12 @@ export default function TaskList({ list, deleteList ,setModal}) {
           {/* Action buttons */}
           <div className="flex shrink-0 items-center gap-1.5">
             <button
-             onClick={()=>setModal(true)}
+            
+            onClick = {()=>{
+                setSelectedList(li.id)
+             setModal(true);
+            }}
+           
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#D6B18D] transition-all duration-200 hover:border-[#B88A62]/25 hover:bg-[#B88A62]/10 hover:text-[#F3D2B1] active:scale-95"
             >
