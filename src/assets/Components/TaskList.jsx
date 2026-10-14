@@ -1,10 +1,13 @@
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import Listcontext from "./TaskContext";
-export default function TaskList({ list,deleteList }) {
-    const {setSelectedList} = useContext(Listcontext)
+export default function TaskList({ list, deleteList ,setModal}) {
+  const { setSelectedList,selectedList } = useContext(Listcontext);
+
+  const Editbtn = list.filter(
+    (li)=> li.id === selectedList)
+
   return (
     <div className="h-86 mt-4 overflow-y-auto overflow-x-hidden rounded-xl border border-[#6B5140]/20 bg-[#1C1714]/40 p-4">
-
       {list.map((li) => (
         <div
           key={li.id}
@@ -26,6 +29,7 @@ export default function TaskList({ list,deleteList }) {
           {/* Action buttons */}
           <div className="flex shrink-0 items-center gap-1.5">
             <button
+             onClick={()=>setModal(true)}
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#D6B18D] transition-all duration-200 hover:border-[#B88A62]/25 hover:bg-[#B88A62]/10 hover:text-[#F3D2B1] active:scale-95"
             >
@@ -33,11 +37,10 @@ export default function TaskList({ list,deleteList }) {
             </button>
 
             <button
-           onClick = {()=>{
-            setSelectedList(li.id)
-               deleteList(li.id)
-           }}
-            
+              onClick={() => {
+                
+                deleteList(li.id);
+              }}
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
             >
@@ -55,9 +58,7 @@ export default function TaskList({ list,deleteList }) {
           <p className="text-sm font-medium text-[#E8D9CA]">
             All clear for now
           </p>
-          <p className="text-xs text-[#9B897A]">
-            Your tasks will appear here.
-          </p>
+          <p className="text-xs text-[#9B897A]">Your tasks will appear here.</p>
         </div>
       )}
     </div>
