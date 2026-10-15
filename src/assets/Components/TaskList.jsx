@@ -51,13 +51,13 @@ export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
               Delete
             </button>
 
-             <button
-              onClick={ToggleFucntion(li.id)}
+            <button
+              onClick={ ()=> ToggleFucntion(li.id)}
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
             >
-              
-            </button>
+               done
+            </button> 
           </div>
         </div>
       ))}
