@@ -78,7 +78,7 @@ function TodolistInput({newlist,setnewList,addnewList}) {
 }
 
 function Todolistform() {
-      const {list,taskList,newlist,setnewList,addnewList,deleteList,setModal,} = useContext(Listcontext);
+      const {list,taskList,newlist,setnewList,addnewList,deleteList,setModal,ToggleFucntion} = useContext(Listcontext);
 
   return (
     <div className="bg-gradient-to-br from-[#382318] to-[#1A100B] h-140 rounded-xl flex overflow-hidden border border-[#CD9D74]/20 shadow-[inset_0_1px_0_rgba(255,235,215,0.06),0_8px_32px_rgba(0,0,0,0.25)]">
@@ -94,6 +94,7 @@ function Todolistform() {
          taskList = {taskList}
          deleteList= {deleteList}
          setModal = {setModal}
+         ToggleFucntion={ToggleFucntion}
          
 
          />

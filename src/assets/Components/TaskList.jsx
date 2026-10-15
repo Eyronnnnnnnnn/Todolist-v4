@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import Listcontext from "./TaskContext";
-export default function TaskList({ list, deleteList ,setModal}) {
+export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
   const { selectedList ,setSelectedList} = useContext(Listcontext);
 
   const Editbtn = list.filter((li)=> li.id === selectedList);
@@ -49,6 +49,14 @@ export default function TaskList({ list, deleteList ,setModal}) {
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
             >
               Delete
+            </button>
+
+             <button
+              onClick={ToggleFucntion(li.id)}
+              type="button"
+              className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
+            >
+              
             </button>
           </div>
         </div>
