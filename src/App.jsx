@@ -15,7 +15,7 @@ function App() {
   const [selectedList ,setSelectedList] = useState("");
   
   const ToggleFucntion = (id)=> { 
-    list.map((li)=> li.id === id ?{...li , status : !status}: li )
+   taskList(list.map((li)=> li.id === id ?{...li , status : !li.status}: li )) 
   }
 
 
