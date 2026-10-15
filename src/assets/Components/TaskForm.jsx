@@ -36,8 +36,17 @@ function Header({weather,loading}) {
 }
 
 function TodolistInput({newlist,setnewList,addnewList}) {
+
+  function handleSubmit(e){
+    e.preventDefault();
+        if (!newlist.trim()) return;
+
+        addnewList();
+        setnewList("")
+
+  }
   return (
-    <div className="bg-gradient-to-br from-[#3B261A]/90 to-[#21140D]/90 w-full h-40 rounded-xl border border-[#CD9D74]/20 p-4">
+    <form  onSubmit={handleSubmit} className="bg-gradient-to-br from-[#3B261A]/90 to-[#21140D]/90 w-full h-40 rounded-xl border border-[#CD9D74]/20 p-4">
       <h1 className="text-[#F5E8DC] font-semibold">
         Todays Task List
       </h1>
@@ -58,14 +67,13 @@ function TodolistInput({newlist,setnewList,addnewList}) {
 
         <div>
           <button 
-          
-          onClick={()=>addnewList()}
+          type="submit"
           className="bg-gradient-to-br from-[#D5A77F] to-[#A8754F] text-[#21140D] font-semibold px-5 py-2 rounded-lg hover:brightness-110 transition h-14">
             Add
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

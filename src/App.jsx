@@ -10,9 +10,9 @@ function App() {
     { id: 3, taskname: "mwapsi", status: false },
   ]);
   const [newId, setnewId] = useState(4);
-  const [newlist, setnewList] = useState(null);
+  const [newlist, setnewList] = useState("");
   const [modal ,setModal] = useState(false)
-  const [selectedList ,setSelectedList] = useState(null);
+  const [selectedList ,setSelectedList] = useState("");
 
 
   const addnewList = () => {
