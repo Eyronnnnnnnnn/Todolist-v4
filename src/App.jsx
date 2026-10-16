@@ -29,7 +29,7 @@ function App() {
     ];
 
     taskList([...list, ...newaddedlist]);
-    setnewId(newId + 1);
+    setnewId(Newid => Newid + 1);
   };
 
   const deleteList = (id) => {

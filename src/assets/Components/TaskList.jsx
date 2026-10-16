@@ -1,9 +1,14 @@
 import { useContext, useState } from "react";
 import Listcontext from "./TaskContext";
-export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
-  const { selectedList ,setSelectedList} = useContext(Listcontext);
+export default function TaskList({
+  list,
+  deleteList,
+  setModal,
+  ToggleFucntion,
+}) {
+  const { selectedList, setSelectedList } = useContext(Listcontext);
 
-  const Editbtn = list.filter((li)=> li.id === selectedList);
+  const Editbtn = list.filter((li) => li.id === selectedList);
 
   return (
     <div className="h-86 mt-4 overflow-y-auto overflow-x-hidden rounded-xl border border-[#6B5140]/20 bg-[#1C1714]/40 p-4">
@@ -14,26 +19,34 @@ export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
         >
           {/* Checkbox */}
           <input
+            checked={li.status}
+            onChange={() => ToggleFucntion(li.id)}
             type="checkbox"
             className="h-5 w-5 shrink-0 cursor-pointer appearance-none rounded-md border border-[#8D725C]/50 bg-[#211914] transition-all duration-200 checked:border-[#C49A72] checked:bg-[#B88A62] checked:after:flex checked:after:h-full checked:after:items-center checked:after:justify-center checked:after:content-['✓'] checked:after:text-xs checked:after:font-bold checked:after:text-[#211914] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C49A72]"
           />
 
           {/* Task name */}
-          <div className="min-w-0 flex-1">
-            <h1 className="truncate text-sm font-medium tracking-wide text-[#F3E8DD] transition-colors group-hover:text-white">
-              {li.taskname}
-            </h1>
-          </div>
+          {!li.status ? (
+            <div className="min-w-0 flex-1">
+              <h1 className="truncate text-sm font-medium tracking-wide text-[#fffcfc] transition-colors group-hover:text-white">
+                {li.taskname}
+              </h1>
+            </div>
+          ) : (
+            <div className="min-w-0 flex-1">
+              <h1 className="truncate text-sm font-medium tracking-wide line-through text-shadow-olive-500">
+                {li.taskname}
+              </h1>
+            </div>
+          )}
 
           {/* Action buttons */}
           <div className="flex shrink-0 items-center gap-1.5">
             <button
-            
-            onClick = {()=>{
-                setSelectedList(li.id)
-             setModal(true);
-            }}
-           
+              onClick={() => {
+                setSelectedList(li.id);
+                setModal(true);
+              }}
               type="button"
               className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#D6B18D] transition-all duration-200 hover:border-[#B88A62]/25 hover:bg-[#B88A62]/10 hover:text-[#F3D2B1] active:scale-95"
             >
@@ -42,7 +55,6 @@ export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
 
             <button
               onClick={() => {
-                
                 deleteList(li.id);
               }}
               type="button"
@@ -50,14 +62,6 @@ export default function TaskList({ list, deleteList ,setModal,ToggleFucntion}) {
             >
               Delete
             </button>
-
-            <button
-              onClick={ ()=> ToggleFucntion(li.id)}
-              type="button"
-              className="rounded-lg border border-transparent px-3 py-2 text-xs font-medium tracking-wide text-[#B9897B] transition-all duration-200 hover:border-[#B9897B]/20 hover:bg-[#B9897B]/10 hover:text-[#E6A99A] active:scale-95"
-            >
-               done
-            </button> 
           </div>
         </div>
       ))}
