@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import Listcontext from "./TaskContext";
-export default function TaskList({
-  list,
+
+
+
+const TaskList = memo(function TaskList({ list,
   deleteList,
   setModal,
-  ToggleFucntion,
-}) {
+  ToggleFucntion,}){
   const { selectedList, setSelectedList } = useContext(Listcontext);
 
   const Editbtn = list.filter((li) => li.id === selectedList);
@@ -79,4 +80,5 @@ export default function TaskList({
       )}
     </div>
   );
-}
+});
+export default TaskList;

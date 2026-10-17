@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TaskForm from "./assets/Components/TaskForm";
 import Listcontext from "./assets/Components/TaskContext";
 import EditTaskModal from "./assets/Components/EditTastModal";
@@ -9,7 +9,8 @@ function App() {
     { id: 2, taskname: "Hehe", status: false },
     { id: 3, taskname: "mwapsi", status: false },
   ]);
-  const [newId, setnewId] = useState(4);
+  // const [newId, setnewId] = useState(4);
+  const newId = useRef(4);
   const [newlist, setnewList] = useState("");
   const [modal ,setModal] = useState(false)
   const [selectedList ,setSelectedList] = useState("");
@@ -24,14 +25,14 @@ function App() {
   const addnewList = () => {
     const newaddedlist = [
       {
-        id: newId,
+        id: newId.current,
         taskname: newlist,
         status: false,
       },
     ];
 
     taskList([...list, ...newaddedlist]);
-    setnewId(Newid => Newid + 1);
+    newId + 1;
   };
 
   const deleteList = (id) => {

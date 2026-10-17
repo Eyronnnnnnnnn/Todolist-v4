@@ -1,8 +1,8 @@
 import TaskList from "./TaskList";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import Listcontext from "./TaskContext";
 
-function Header({ weather, loading }) {
+const Header = memo(function Header({ weather,loading}) {
   return (
     <div className="h-20 flex  justify-start">
       <div className=" w-60">
@@ -22,7 +22,7 @@ function Header({ weather, loading }) {
       </div>
     </div>
   );
-}
+});
 
 function TodolistInput({ newlist, setnewList, addnewList }) {
   function handleSubmit(e) {
