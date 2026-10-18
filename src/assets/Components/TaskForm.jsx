@@ -1,8 +1,9 @@
 import TaskList from "./TaskList";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Listcontext from "./TaskContext";
 
-const Header = memo(function Header({ weather,loading}) {
+const Header = memo(function Header({ weather,loading,error,searchedList,setSearch}) {
+  
   return (
     <div className="h-20 flex  justify-start">
       <div className=" w-60">
@@ -16,15 +17,29 @@ const Header = memo(function Header({ weather,loading}) {
       <div className=" h-20 w-150 flex justify-center items-center">
         <div className=" w-70 ">
           <h1 className="text-white font-bold text-lg">
-            {loading ? "Getting Date and Time..." : weather}
+            { loading ? "Getting Date and Time..." : error ? "Error Cant Fetch Data" : weather}
           </h1>
         </div>
+        <input
+            onChange={(e)=>setSearch(e.target.value)}
+            className="w-150 h-9 bg-transparent text-[#F5E8DC] placeholder:text-[#B49A83] outline-none border-amber-700 border-2"
+            type="text"
+            placeholder=" Searh list"
+          />
       </div>
+      
     </div>
   );
 });
 
 function TodolistInput({ newlist, setnewList, addnewList }) {
+
+  const inputRef = useRef(null);
+
+  useEffect(()=>{
+    inputRef.current.focus();
+  },[])
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!newlist.trim()) return;
@@ -43,6 +58,7 @@ function TodolistInput({ newlist, setnewList, addnewList }) {
       <div className="bg-gradient-to-r from-[#69432B]/50 to-[#382318]/60 h-14 rounded-lg flex items-center pl-4 border border-[#CD9D74]/20 shadow-inner">
         <div>
           <input
+           ref={inputRef}
             value={newlist}
             onChange={(e) => setnewList(e.target.value)}
             className="w-150 h-9 bg-transparent text-[#F5E8DC] placeholder:text-[#B49A83] outline-none"
@@ -64,7 +80,7 @@ function TodolistInput({ newlist, setnewList, addnewList }) {
   );
 }
 
-function Todolistform() {
+function Todolistform({searchedList}) {
   const {
     list,
     newlist,
@@ -73,11 +89,14 @@ function Todolistform() {
     deleteList,
     setModal,
     ToggleFucntion,
-    totaldonetask
+    totaldonetask,
+    
   } = useContext(Listcontext);
 
   const percentage = totaldonetask === 0 ? 0 : parseFloat(((totaldonetask / list.length)* 100.).toFixed(2));
+ 
 
+  
   return (
     <div className="bg-gradient-to-br from-[#382318] to-[#1A100B] h-140 rounded-xl flex overflow-hidden border border-[#CD9D74]/20 shadow-[inset_0_1px_0_rgba(255,235,215,0.06),0_8px_32px_rgba(0,0,0,0.25)]">
       <div className="bg-gradient-to-br from-[#302016]/90 to-[#21140D]/90 w-192 p-4 ">
@@ -88,7 +107,8 @@ function Todolistform() {
         />
 
         <TaskList
-          list={list}
+        list = {searchedList}
+         
           deleteList={deleteList}
           setModal={setModal}
           ToggleFucntion={ToggleFucntion}
@@ -184,27 +204,42 @@ function Todolistform() {
 export default function TaskForm() {
   const [weather, setWeather] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error,setError] = useState(false);
+
+  const {list} = useContext(Listcontext);
+
+    const [search ,setSearch] = useState("")
+
+  const searchedList = useMemo(()=>{
+   return list.filter((li)=> li.taskname.includes(""))
+  },[search,list])  
+
+
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUser  = async () => {
       try {
         const response = await fetch(
           "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m,wind_speed_10m&timezone=Asia%2FManila",
-        );
+        ); 
         const data = await response.json();
 
         setWeather(data.current.time);
         setLoading(false);
       } catch (error) {
+       setError(true);
         setLoading(false);
       }
     };
     fetchUser();
+    return ()=> {console.log("cleanup")}
   }, []);
 
   return (
     <div className="w-full h-full  p-6">
-      <Header weather={weather} loading={loading} />
-      <Todolistform />
+      <Header weather={weather} loading={loading} error={error} searchedList = {searchedList} setSearch = {setSearch} />
+      <Todolistform
+      searchedList = {searchedList}
+      />
 
       <div className="bg-gradient-to-r from-[#2D1B12]/80 to-[#170E09]/80 rounded-xl"></div>
     </div>

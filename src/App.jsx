@@ -32,11 +32,11 @@ function App() {
     ];
 
     taskList([...list, ...newaddedlist]);
-    newId + 1;
+    newId.current ++ ;
   };
 
   const deleteList = (id) => {
-    taskList(list.filter((li) => li.id !== id));
+    taskList((prevList) => prevList.filter((li)=> li.id !== id));
   };
 
 
